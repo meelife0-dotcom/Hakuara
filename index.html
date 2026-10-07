@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Swapshelf – échangez des livres au Maroc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eceff4;--ink:#0f1b3d;--muted:#59638a;--card:#fff;--line:#cdd5e4;--accent:#2540d9;--on-accent:#fff;--good:#0f766e;--bad:#b4234a;--gold:#f2a900;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1226;--ink:#eef1fb;--muted:#9aa5c9;--card:#151d3a;--line:#27315a;--accent:#8196ff;--on-accent:#0c1226;--good:#4fd1c0;--bad:#ff7a9c}}
+:root[data-theme="dark"]{--bg:#0c1226;--ink:#eef1fb;--muted:#9aa5c9;--card:#151d3a;--line:#27315a;--accent:#8196ff;--on-accent:#0c1226;--good:#4fd1c0;--bad:#ff7a9c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Young Serif",Georgia,serif;font-weight:400}
+button,select,input{font-family:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:26px 16px 56px}
+header h1{font-size:2.7rem;line-height:1;margin:0;letter-spacing:-.01em}
+header p{margin:8px 0 22px;color:var(--muted);max-width:34ch}
+nav{display:flex;gap:4px;background:var(--line);padding:4px;border-radius:8px;margin-bottom:22px;overflow-x:auto}
+.tab{flex:1;background:none;border:0;border-radius:5px;padding:9px 10px;font-size:.95rem;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.18)}
+.badge{background:var(--gold);color:#14161f;border-radius:99px;padding:0 7px;font-size:.78rem;margin-left:6px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px 16px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
+.book{display:flex;flex-direction:column}
+.cover{aspect-ratio:3/4;display:grid;grid-template-rows:1fr 2.2fr 1fr;border-radius:3px 7px 7px 3px;overflow:hidden;box-shadow:inset 7px 0 0 rgba(0,0,0,.2),0 6px 14px -8px rgba(0,0,0,.45)}
+.cover i{background:var(--b);color:var(--t);font:600 .72rem/1.2 "DM Sans",system-ui,sans-serif;font-style:normal;padding:7px 10px 7px 16px;display:flex;align-items:flex-end}
+.cover .mid{background:#fbfaf6;color:#14161f;display:grid;place-items:center;text-align:center;padding:8px 10px 8px 16px}
+.cover b{font:400 1.08rem/1.15 "Young Serif",Georgia,serif}
+.info{padding:10px 2px 0;font-size:.9rem;display:flex;flex-direction:column;gap:2px;flex:1}
+.info>span:first-child{font-weight:700}
+.info small{color:var(--muted);font-size:.85rem}
+.btn{background:var(--accent);color:var(--on-accent);border:0;border-radius:6px;padding:10px 12px;font-weight:700;font-size:.92rem;cursor:pointer;margin-top:auto}
+.info .btn{margin-top:8px}
+.btn.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.row{background:var(--card);border-left:4px solid var(--line);border-radius:4px 8px 8px 4px;padding:14px 16px;margin-bottom:10px}
+.row.match{border-left-color:var(--gold)}
+.row p{margin:0 0 10px}
+.acts{display:flex;gap:8px}
+.status{font-weight:700;font-size:.88rem}
+.ok{color:var(--good)}.no{color:var(--bad)}.wait{color:var(--muted)}
+h2{font-size:1.25rem;margin:26px 0 10px}
+form.add{display:grid;gap:12px;grid-template-columns:1fr 1fr;background:var(--card);border-radius:8px;padding:16px;margin-bottom:20px}
+form.add .full{grid-column:1/-1}
+label{font-size:.88rem;font-weight:700;display:grid;gap:4px}
+input,select{font-size:1rem;padding:10px;border:1.5px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);width:100%}
+.empty{color:var(--muted);padding:16px 0}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--card);border-radius:99px;padding:4px 6px 4px 14px;margin:0 6px 6px 0;font-size:.95rem}
+.chip button{border:0;background:var(--bg);color:var(--ink);border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:1rem;line-height:1}
+.flag{background:var(--gold);color:#14161f;border-radius:4px;padding:2px 8px;font-weight:700;font-size:.78rem;align-self:flex-start;margin-top:4px}
+dialog{border:0;border-radius:10px;background:var(--card);color:var(--ink);width:min(92vw,440px);padding:20px;box-shadow:0 20px 50px -10px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(8,12,30,.6)}
+.pick{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:6px;padding:9px 10px;margin-bottom:6px;font-weight:400;cursor:pointer}
+.pick input{width:auto}
+.hint{background:var(--bg);border-left:3px solid var(--gold);border-radius:4px;padding:10px 12px;font-size:.92rem;margin:12px 0}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:700;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.show{opacity:1}
+@media(prefers-reduced-motion:reduce){#toast{transition:none}}
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+#q{grid-column:1/-1}
+.sub{color:var(--muted);font-size:.88rem;margin:0 0 18px}
+.cityl{display:flex;align-items:center;gap:8px;margin:0 0 20px;font-weight:700}
+.cityl select{width:auto}
+.cover.ph{display:block}
+.cover.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.flag.alt{background:var(--line);color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Swapshelf</h1>
+  <p>Échangez les livres que vous avez finis contre ceux que vous voulez lire ensuite, partout au Maroc.</p>
+  <label class="cityl">Ma ville <select id="mycity"></select></label>
+</header>
+<nav role="tablist" id="tabs">
+  <button class="tab" role="tab" data-v="browse" aria-selected="true">Parcourir</button>
+  <button class="tab" role="tab" data-v="matches" aria-selected="false">Correspondances<span class="badge" id="mbadge" hidden></span></button>
+  <button class="tab" role="tab" data-v="shelf" aria-selected="false">Mon étagère</button>
+  <button class="tab" role="tab" data-v="reqs" aria-selected="false">Demandes<span class="badge" id="badge" hidden></span></button>
+</nav>
+<main id="view"></main>
+</div>
+
+<dialog id="dlg">
+  <h3 id="dtitle" style="margin:0 0 10px"></h3>
+  <p style="margin:0 0 8px">Choisissez un de vos livres à proposer :</p>
+  <div id="picks"></div>
+  <label>Ajouter de l'argent (facultatif)
+    <input type="number" id="money" min="0" step="5" value="0">
+  </label>
+  <div class="hint" id="hint"></div>
+  <div class="acts">
+    <button class="btn" id="send">Envoyer la demande d'échange</button>
+    <button class="btn alt" id="cancel" style="margin-top:auto">Annuler</button>
+  </div>
+</dialog>
+<div id="toast" role="status"></div>
+
+<script>
+const COLORS=[["#2540d9","#fff"],["#e4572e","#fff"],["#1f6b4a","#fff"],["#f2a900","#14161f"],["#7a2e6e","#fff"],["#0e7c86","#fff"]];
+let nid=20;
+const me="Vous";
+const CITIES={"Casablanca":[33.57,-7.59],"Rabat":[34.02,-6.84],"Kénitra":[34.26,-6.58],"Marrakech":[31.63,-8.01],"Fès":[34.03,-5.0],"Meknès":[33.89,-5.55],"Tanger":[35.76,-5.8],"Tétouan":[35.57,-5.37],"Agadir":[30.43,-9.6],"El Jadida":[33.23,-8.5],"Oujda":[34.68,-1.91]};
+const city={Vous:"Casablanca",Rafael:"Fès",Sam:"Casablanca",Lena:"Marrakech",Omar:"Tanger"};
+const CATS=["Roman","Science-fiction","Fantasy","Histoire","Biographie","Développement personnel","Jeunesse","Études"];
+const CONDS=["Comme neuf","Bon état","Usé"];
+const F={q:"",cat:"",cond:""};
+const km=(a,b)=>{const[p,q]=CITIES[a],[r,t]=CITIES[b],R=Math.PI/180,x=Math.sin((r-p)*R/2)**2+Math.cos(p*R)*Math.cos(r*R)*Math.sin((t-q)*R/2)**2;return 12742*Math.asin(Math.sqrt(x))};
+const dist=u=>km(city[me],city[u]);
+const distLbl=u=>{const d=dist(u);return d<1?"même ville":`à ${Math.round(d)} km`};
+function shrink(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,420/im.width),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.8))};im.onerror=()=>cb("");im.src=r.result};r.readAsDataURL(file)}
+function drawRes(){
+ const M=matches(),qn=norm(F.q);
+ const o=books.filter(b=>b.owner!==me&&(!F.cat||b.cat===F.cat)&&(!F.cond||b.cond===F.cond)&&(!qn||norm(b.title+" "+b.author).includes(qn)));
+ const sc=b=>(M.some(x=>x.theirs.id===b.id)?4:has(me,b)?2:0)+(dist(b.owner)<=120?1:0);
+ o.sort((a,b)=>sc(b)-sc(a)||dist(a.owner)-dist(b.owner));
+ $("#res").innerHTML=o.length?`<div class="grid">${o.map(b=>card(b,(M.some(x=>x.theirs.id===b.id)?`<span class="flag">Correspondance mutuelle</span>`:has(me,b)?`<span class="flag alt">Sur votre liste d'envies</span>`:"")+`<button class="btn" data-want="${b.id}">Échanger contre celui-ci</button>`)).join("")}</div>`:`<p class="empty">Aucun livre ne correspond à votre recherche.</p>`}
+let books=[
+ {id:1,title:"Sapiens",author:"Yuval Noah Harari",cond:"Bon état",cat:"Histoire",value:90,owner:me,c:0},
+ {id:2,title:"Atomic Habits",author:"James Clear",cond:"Comme neuf",cat:"Développement personnel",value:80,owner:me,c:2},
+ {id:3,title:"Dune",author:"Frank Herbert",cond:"Bon état",cat:"Science-fiction",value:100,owner:"Rafael",c:3},
+ {id:4,title:"Project Hail Mary",author:"Andy Weir",cond:"Comme neuf",cat:"Science-fiction",value:120,owner:"Sam",c:1},
+ {id:5,title:"Norwegian Wood",author:"Haruki Murakami",cond:"Usé",cat:"Roman",value:60,owner:"Sam",c:4},
+ {id:6,title:"The Hobbit",author:"J.R.R. Tolkien",cond:"Bon état",cat:"Fantasy",value:70,owner:"Omar",c:5},
+ {id:7,title:"Educated",author:"Tara Westover",cond:"Bon état",cat:"Biographie",value:90,owner:"Lena",c:0}
+];
+let reqs=[{id:1,from:"Sam",to:me,want:1,offer:5,money:30,status:"pending"}];
+let wish={Vous:["Dune","Project Hail Mary"],Rafael:["Atomic Habits"],Sam:["Sapiens"],Lena:["Atomic Habits"],Omar:["Dune"]};
+const norm=s=>String(s).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+// Flexible wishlist matching: ignores case, accents, punctuation and articles; accepts partial titles, author names and small typos
+const clean=s=>norm(s).replace(/[^a-z0-9 ]/g," ").replace(/\b(the|a|an|le|la|les|l|un|une|des|de|du)\b/g," ").replace(/\s+/g," ").trim();
+function lev(a,b){const d=[...Array(b.length+1).keys()];for(let i=1;i<=a.length;i++){let p=d[0];d[0]=i;for(let j=1;j<=b.length;j++){const t=d[j];d[j]=Math.min(d[j]+1,d[j-1]+1,p+(a[i-1]===b[j-1]?0:1));p=t}}return d[b.length]}
+function fz(t,b){const w=clean(t);if(w.length<3)return false;
+ return [clean(b.title),clean(b.author)].some(f=>f===w||f.includes(w)||(f.length>=4&&w.includes(f))||lev(f,w)<=Math.floor(Math.max(f.length,w.length)/5))}
+const has=(u,b)=>(wish[u]||[]).some(t=>fz(t,b));
+// Matching engine: I own a book they want AND they own a book I want
+function matches(){const out=[];
+ [...new Set(books.map(b=>b.owner).filter(o=>o!==me))].forEach(u=>{
+  books.filter(b=>b.owner===u&&has(me,b)).forEach(theirs=>
+   books.filter(b=>b.owner===me&&has(u,b)).forEach(my=>out.push({u,theirs,my})))});
+ out.sort((a,b)=>dist(a.u)-dist(b.u));return out}
+const seen=new Set();let ready=false;
+function pend(x){
+ if(reqs.some(r=>r.status==="pending"&&r.from===me&&r.want===x.theirs.id&&r.offer===x.my.id))return"Demande envoyée";
+ if(reqs.some(r=>r.status==="pending"&&r.from===x.u&&r.want===x.my.id&&r.offer===x.theirs.id))return"Demande déjà reçue de sa part. Voir Demandes.";
+ return""}
+function wishHtml(){const w=wish[me];
+ return w.length?w.map((t,i)=>`<span class="chip">${esc(t)}<button data-rm="${i}" aria-label="Retirer ${esc(t)}">×</button></span>`).join(""):`<p class="empty">Aucune envie pour le moment. Ajoutez un livre que vous aimeriez recevoir.</p>`}
+let view="browse",target=null;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const get=id=>books.find(b=>b.id===id);
+const mine=()=>books.filter(b=>b.owner===me);
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),2400)}
+function card(b,action){
+ const cv=b.img?`<div class="cover ph"><img src="${b.img}" alt="Couverture de ${esc(b.title)}"></div>`:`<div class="cover" style="--b:${COLORS[b.c%6][0]};--t:${COLORS[b.c%6][1]}"><i></i><div class="mid"><b>${esc(b.title)}</b></div><i>${esc(b.author)}</i></div>`;
+ const tt=b.img?`<span>${esc(b.title)}</span>`:"";
+ const loc=b.owner===me?"":`<small>${esc(city[b.owner])} · ${distLbl(b.owner)}</small>`;
+ return `<article class="book">${cv}<div class="info">${tt}<span>${esc(b.owner)}</span><small>${esc(b.cat)} · ${esc(b.cond)} · valeur d'environ ${b.value} DH</small>${loc}${action||""}</div></article>`}
+function render(){
+ document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.v===view));
+ const inc=reqs.filter(r=>r.to===me&&r.status==="pending").length;
+ $("#badge").hidden=!inc;$("#badge").textContent=inc;
+ const v=$("#view"),M=matches();
+ $("#mbadge").hidden=!M.length;$("#mbadge").textContent=M.length;
+ M.forEach(x=>{const k=x.theirs.id+"-"+x.my.id;if(!seen.has(k)){seen.add(k);if(ready)setTimeout(()=>toast(`Nouvelle correspondance avec ${x.u} !`),50)}});
+ ready=true;
+ if(view==="browse"){
+  v.innerHTML=`<div class="filters"><input type="search" id="q" placeholder="Rechercher un titre ou un auteur" aria-label="Rechercher un livre"><select id="fc" aria-label="Catégorie"><option value="">Toutes les catégories</option>${CATS.map(c=>`<option>${c}</option>`).join("")}</select><select id="fs" aria-label="État du livre (occasion)"><option value="">Tous les états</option>${CONDS.map(c=>`<option>${c}</option>`).join("")}</select></div><p class="sub">Les livres que vous cherchez, dont le propriétaire veut un des vôtres, dans votre ville ou à proximité, apparaissent en premier.</p><div id="res"></div>`;
+  $("#q").value=F.q;$("#fc").value=F.cat;$("#fs").value=F.cond;
+  $("#q").oninput=e=>{F.q=e.target.value;drawRes()};$("#fc").onchange=e=>{F.cat=e.target.value;drawRes()};$("#fs").onchange=e=>{F.cond=e.target.value;drawRes()};
+  drawRes();
+ }else if(view==="matches"){
+  v.innerHTML=`<p style="margin-top:0">Swapshelf compare toutes les étagères et listes d'envies. Une correspondance apparaît quand vous possédez un livre que quelqu'un veut et que cette personne possède un livre que vous voulez.</p>`+
+  (M.length?M.map(x=>{const s=pend(x);return `<div class="row match"><p><strong>Correspondance avec ${esc(x.u)}</strong> <small>(${esc(city[x.u])}, ${distLbl(x.u)})</small><br>Vous donnez « ${esc(x.my.title)} » (${x.my.value} DH) et recevez « ${esc(x.theirs.title)} » (${x.theirs.value} DH).</p>${s?`<span class="status wait">${s}</span>`:`<button class="btn" data-prop="${x.theirs.id}-${x.my.id}">Proposer cet échange</button>`}</div>`}).join(""):`<p class="empty">Aucune correspondance pour l'instant. Ajoutez des livres souhaités à votre liste d'envies dans Mon étagère.</p>`);
+ }else if(view==="shelf"){
+  v.innerHTML=`<form class="add" id="addf"><label class="full">Titre<input name="t" required></label>
+  <label>Auteur<input name="a" required></label>
+  <label>Valeur estimée (DH)<input name="v" type="number" min="5" step="5" value="80" required></label>
+  <label>État<select name="c"><option>Comme neuf</option><option selected>Bon état</option><option>Usé</option></select></label>
+  <label>Catégorie<select name="k">${CATS.map(c=>`<option>${c}</option>`).join("")}</select></label><label class="full">Photo du livre<input name="p" type="file" accept="image/*"></label><button class="btn full" type="submit">Ajouter à mon étagère</button></form>
+  ${mine().length?`<div class="grid">${mine().map(b=>card(b)).join("")}</div>`:`<p class="empty">Votre étagère est vide. Ajoutez un livre ci-dessus pour commencer à échanger.</p>`}
+  <h2>Ma liste d'envies</h2>
+  <form class="add" id="wf" style="grid-template-columns:1fr auto"><label>Livre que vous voulez<input name="w" required></label><button class="btn" type="submit" style="align-self:end;margin-top:0">Ajouter</button></form>
+  <div>${wishHtml()}</div>`;
+  $("#wf").onsubmit=e=>{e.preventDefault();const t=new FormData(e.target).get("w").trim();
+   if(t&&!wish[me].some(x=>norm(x)===norm(t)))wish[me].push(t);render()};
+  $("#addf").onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),file=f.get("p"),
+   add=img=>{books.push({id:nid++,title:f.get("t"),author:f.get("a"),cond:f.get("c"),cat:f.get("k"),value:+f.get("v")||5,owner:me,c:nid%6,img});toast("Livre ajouté");render()};
+   file&&file.size?shrink(file,add):add("")};
+ }else{
+  const line=r=>{const w=get(r.want),o=get(r.offer);
+   const m=r.money?` + ${r.money} DH`:"";
+   return `<strong>${r.from===me?"Vous proposez":esc(r.from)+" propose"}</strong> « ${esc(o.title)} »${m} contre « ${esc(w.title)} »`};
+  const inc=reqs.filter(r=>r.to===me&&r.status==="pending");
+  const sent=reqs.filter(r=>r.from===me&&r.status==="pending");
+  const done=reqs.filter(r=>r.status!=="pending");
+  v.innerHTML=`<h2 style="margin-top:0">En attente de votre réponse</h2>`+
+   (inc.length?inc.map(r=>`<div class="row"><p>${line(r)}</p><div class="acts"><button class="btn" data-acc="${r.id}">Accepter</button><button class="btn alt" data-dec="${r.id}" style="margin-top:auto">Refuser</button></div></div>`).join(""):`<p class="empty">Aucune demande pour le moment.</p>`)+
+   `<h2>Envoyées par vous</h2>`+(sent.length?sent.map(r=>`<div class="row"><p>${line(r)}</p><span class="status wait">En attente de ${esc(r.to)}</span></div>`).join(""):`<p class="empty">Rien d'envoyé pour l'instant. Trouvez un livre dans Parcourir.</p>`)+
+   (done.length?`<h2>Terminées</h2>`+done.map(r=>`<div class="row"><p>${line(r)}</p><span class="status ${r.status==="accepted"?"ok":"no"}">${r.status==="accepted"?"Échangé":"Refusé"}</span></div>`).join(""):"");
+ }
+}
+function hint(){
+ const w=get(target),o=get(+(document.querySelector("input[name=pick]:checked")||{}).value);
+ const h=$("#hint");
+ if(!o){h.textContent="Choisissez un livre pour comparer les valeurs.";return}
+ const d=w.value-o.value;
+ h.textContent=d>0?`« ${w.title} » vaut environ ${d} DH de plus que le vôtre. Ajouter ${d} DH rééquilibrerait l'échange.`:d<0?`Votre livre vaut environ ${-d} DH de plus. Le propriétaire peut ajouter de l'argent, ou vous pouvez échanger tel quel.`:"Les deux livres ont à peu près la même valeur. Un échange direct convient.";
+}
+function openSwap(id,pre){target=id;const m=mine();
+ if(!m.length){toast("Ajoutez d'abord un livre à votre étagère");view="shelf";render();return}
+ $("#dtitle").textContent=`Échanger contre « ${get(target).title} »`;
+ const sel=m.some(b=>b.id===pre)?pre:m[0].id;
+ $("#picks").innerHTML=m.map(b=>`<label class="pick"><input type="radio" name="pick" value="${b.id}" ${b.id===sel?"checked":""}>${esc(b.title)} <small>(${b.value} DH)</small></label>`).join("");
+ $("#money").value=0;hint();$("#dlg").showModal()}
+$("#tabs").onclick=e=>{const t=e.target.closest(".tab");if(t){view=t.dataset.v;render()}};
+$("#view").onclick=e=>{
+ const q=a=>e.target.closest(`[data-${a}]`);
+ if(q("want")){
+  openSwap(+q("want").dataset.want);
+ }
+ if(q("prop")){const [a,b]=q("prop").dataset.prop.split("-");openSwap(+a,+b)}
+ if(q("rm")){wish[me].splice(+q("rm").dataset.rm,1);render()}
+ const acc=q("acc"),dec=q("dec");
+ if(acc){const r=reqs.find(x=>x.id===+acc.dataset.acc);
+  const w=get(r.want),o=get(r.offer);w.owner=r.from;o.owner=me;r.status="accepted";
+  wish[me]=wish[me].filter(t=>!fz(t,o));wish[r.from]=(wish[r.from]||[]).filter(t=>!fz(t,w));
+  toast(`Échange conclu avec ${r.from}`);render()}
+ if(dec){reqs.find(x=>x.id===+dec.dataset.dec).status="declined";toast("Demande refusée");render()}
+};
+$("#picks").onchange=hint;
+$("#cancel").onclick=()=>$("#dlg").close();
+$("#send").onclick=()=>{
+ const o=document.querySelector("input[name=pick]:checked");if(!o)return;
+ const w=get(target);
+ reqs.push({id:nid++,from:me,to:w.owner,want:target,offer:+o.value,money:Math.max(0,+$("#money").value||0),status:"pending"});
+ $("#dlg").close();toast(`Demande envoyée à ${w.owner}`);view="reqs";render();
+};
+$("#mycity").innerHTML=Object.keys(CITIES).map(c=>`<option>${c}</option>`).join("");
+$("#mycity").value=city[me];$("#mycity").onchange=e=>{city[me]=e.target.value;render()};
+render();
+</script>
+</body>
+</html>
