@@ -3,21 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Swapshelf – échangez des livres au Maroc</title>
+<meta name="description" content="Tabadol : échangez les livres que vous avez lus contre ceux que vous voulez. Échange de livres gratuit entre lecteurs au Maroc.">
+<title>تبادل Tabadol – échangez des livres au Maroc</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=DM+Sans:wght@400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eceff4;--ink:#0f1b3d;--muted:#59638a;--card:#fff;--line:#cdd5e4;--accent:#2540d9;--on-accent:#fff;--good:#0f766e;--bad:#b4234a;--gold:#f2a900;
+:root{--bg:#f6f1e3;--ink:#1f2a24;--muted:#5b6556;--card:#fffdf6;--line:#ddd3b8;--accent:#0f5c4d;--on-accent:#fff;--good:#0f5c4d;--bad:#9c2b2b;--gold:#c8962e;--gold-d:#8a6414;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1226;--ink:#eef1fb;--muted:#9aa5c9;--card:#151d3a;--line:#27315a;--accent:#8196ff;--on-accent:#0c1226;--good:#4fd1c0;--bad:#ff7a9c}}
-:root[data-theme="dark"]{--bg:#0c1226;--ink:#eef1fb;--muted:#9aa5c9;--card:#151d3a;--line:#27315a;--accent:#8196ff;--on-accent:#0c1226;--good:#4fd1c0;--bad:#ff7a9c}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "DM Sans",system-ui,sans-serif}
 h1,h2,h3{font-family:"Young Serif",Georgia,serif;font-weight:400}
 button,select,input{font-family:inherit}
 .wrap{max-width:760px;margin:0 auto;padding:26px 16px 56px}
-header h1{font-size:2.7rem;line-height:1;margin:0;letter-spacing:-.01em}
+header{border-bottom:1px solid var(--gold);margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:14px}
+.mark{width:56px;height:56px;flex:none}
+header h1{margin:0;display:flex;align-items:baseline;gap:10px;line-height:1.1}
+.nm-ar{font:700 3rem/1 Amiri,"Noto Naskh Arabic",serif;color:var(--accent)}
+.nm-la{font:400 1.7rem/1 "Young Serif",Georgia,serif;color:var(--ink)}
+header p.ar{font:700 1.4rem/1.5 Amiri,"Noto Naskh Arabic",serif;color:var(--gold-d);margin:6px 0 0;max-width:none;text-align:left}
 header p{margin:8px 0 22px;color:var(--muted);max-width:34ch}
 nav{display:flex;gap:4px;background:var(--line);padding:4px;border-radius:8px;margin-bottom:22px;overflow-x:auto}
 .tab{flex:1;background:none;border:0;border-radius:5px;padding:9px 10px;font-size:.95rem;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap}
@@ -29,7 +34,7 @@ nav{display:flex;gap:4px;background:var(--line);padding:4px;border-radius:8px;ma
 .book{display:flex;flex-direction:column}
 .cover{aspect-ratio:3/4;display:grid;grid-template-rows:1fr 2.2fr 1fr;border-radius:3px 7px 7px 3px;overflow:hidden;box-shadow:inset 7px 0 0 rgba(0,0,0,.2),0 6px 14px -8px rgba(0,0,0,.45)}
 .cover i{background:var(--b);color:var(--t);font:600 .72rem/1.2 "DM Sans",system-ui,sans-serif;font-style:normal;padding:7px 10px 7px 16px;display:flex;align-items:flex-end}
-.cover .mid{background:#fbfaf6;color:#14161f;display:grid;place-items:center;text-align:center;padding:8px 10px 8px 16px}
+.cover .mid{background:#fbf6e6;color:#14161f;display:grid;place-items:center;text-align:center;padding:8px 10px 8px 16px}
 .cover b{font:400 1.08rem/1.15 "Young Serif",Georgia,serif}
 .info{padding:10px 2px 0;font-size:.9rem;display:flex;flex-direction:column;gap:2px;flex:1}
 .info>span:first-child{font-weight:700}
@@ -53,7 +58,7 @@ input,select{font-size:1rem;padding:10px;border:1.5px solid var(--line);border-r
 .chip button{border:0;background:var(--bg);color:var(--ink);border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:1rem;line-height:1}
 .flag{background:var(--gold);color:#14161f;border-radius:4px;padding:2px 8px;font-weight:700;font-size:.78rem;align-self:flex-start;margin-top:4px}
 dialog{border:0;border-radius:10px;background:var(--card);color:var(--ink);width:min(92vw,440px);padding:20px;box-shadow:0 20px 50px -10px rgba(0,0,0,.5)}
-dialog::backdrop{background:rgba(8,12,30,.6)}
+dialog::backdrop{background:rgba(24,30,24,.55)}
 .pick{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:6px;padding:9px 10px;margin-bottom:6px;font-weight:400;cursor:pointer}
 .pick input{width:auto}
 .hint{background:var(--bg);border-left:3px solid var(--gold);border-radius:4px;padding:10px 12px;font-size:.92rem;margin:12px 0}
@@ -68,12 +73,23 @@ dialog::backdrop{background:rgba(8,12,30,.6)}
 .cover.ph{display:block}
 .cover.ph img{width:100%;height:100%;object-fit:cover;display:block}
 .flag.alt{background:var(--line);color:var(--ink)}
+.about{background:var(--card);border-radius:8px;padding:20px}
+.about p{margin:0 0 12px}
+.about ol,.about ul{padding-left:22px;margin:0 0 12px}
+.about li{margin-bottom:8px}
+.about .ar2{font:700 1.4rem/1.5 Amiri,"Noto Naskh Arabic",serif;color:var(--gold-d);margin:16px 0}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <h1>Swapshelf</h1>
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 48 48" role="img" aria-label="Logo Tabadol"><rect width="48" height="48" rx="11" fill="#0f5c4d"/><rect x="11" y="17" width="9" height="14" rx="1.5" fill="#fbf6e6"/><rect x="28" y="17" width="9" height="14" rx="1.5" fill="#c8962e"/><g fill="none" stroke="#fbf6e6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10.5h22M31 7l4 3.5-4 3.5"/><path d="M35 37.5H13M17 34l-4 3.5 4 3.5"/></g></svg>
+    <div>
+      <h1><span class="nm-ar" lang="ar" dir="rtl">تبادل</span><span class="nm-la">Tabadol</span></h1>
+      <p class="ar" lang="ar" dir="rtl">تبادل الكتب، تبادل المعرفة والعلم</p>
+    </div>
+  </div>
   <p>Échangez les livres que vous avez finis contre ceux que vous voulez lire ensuite, partout au Maroc.</p>
   <label class="cityl">Ma ville <select id="mycity"></select></label>
 </header>
@@ -82,6 +98,7 @@ dialog::backdrop{background:rgba(8,12,30,.6)}
   <button class="tab" role="tab" data-v="matches" aria-selected="false">Correspondances<span class="badge" id="mbadge" hidden></span></button>
   <button class="tab" role="tab" data-v="shelf" aria-selected="false">Mon étagère</button>
   <button class="tab" role="tab" data-v="reqs" aria-selected="false">Demandes<span class="badge" id="badge" hidden></span></button>
+  <button class="tab" role="tab" data-v="about" aria-selected="false">À propos</button>
 </nav>
 <main id="view"></main>
 </div>
@@ -102,13 +119,35 @@ dialog::backdrop{background:rgba(8,12,30,.6)}
 <div id="toast" role="status"></div>
 
 <script>
-const COLORS=[["#2540d9","#fff"],["#e4572e","#fff"],["#1f6b4a","#fff"],["#f2a900","#14161f"],["#7a2e6e","#fff"],["#0e7c86","#fff"]];
+const COLORS=[["#0f5c4d","#fff"],["#7a1f2b","#fff"],["#c8962e","#1f2a24"],["#5b6b2e","#fff"],["#5e2a5a","#fff"],["#1b5e6b","#fff"]];
 let nid=20;
 const me="Vous";
 const CITIES={"Casablanca":[33.57,-7.59],"Rabat":[34.02,-6.84],"Kénitra":[34.26,-6.58],"Marrakech":[31.63,-8.01],"Fès":[34.03,-5.0],"Meknès":[33.89,-5.55],"Tanger":[35.76,-5.8],"Tétouan":[35.57,-5.37],"Agadir":[30.43,-9.6],"El Jadida":[33.23,-8.5],"Oujda":[34.68,-1.91]};
 const city={Vous:"Casablanca",Rafael:"Fès",Sam:"Casablanca",Lena:"Marrakech",Omar:"Tanger"};
 const CATS=["Roman","Science-fiction","Fantasy","Histoire","Biographie","Développement personnel","Jeunesse","Études"];
 const CONDS=["Comme neuf","Bon état","Usé"];
+const ABOUT=`<article class="about">
+<h2 style="margin-top:0">L'idée de Tabadol</h2>
+<p><strong>Tabadol (تبادل) est un site gratuit où les lecteurs au Maroc échangent leurs livres</strong> au lieu d'en acheter de nouveaux.</p>
+<p>Chacun a des livres déjà lus et en veut de nouveaux. Les livres coûtent cher : Tabadol met en relation des personnes qui ont chacune ce que l'autre cherche, pour que le livre terminé devienne le prochain à lire.</p>
+<h2>Comment ça marche</h2>
+<ol>
+<li><strong>Publiez vos livres</strong> avec une photo, une catégorie, l'état et une valeur estimée.</li>
+<li><strong>Ajoutez à votre liste d'envies</strong> les livres que vous cherchez.</li>
+<li><strong>Cherchez et filtrez</strong> par titre, auteur, catégorie ou état. Les livres que vous voulez, et ceux près de chez vous, apparaissent en premier.</li>
+<li><strong>Trouvez une correspondance :</strong> Tabadol repère automatiquement quand vous possédez un livre que quelqu'un veut et que cette personne possède un livre que vous voulez.</li>
+<li><strong>Proposez l'échange.</strong> Le propriétaire accepte ou refuse. Si les livres n'ont pas la même valeur, vous pouvez ajouter de l'argent pour équilibrer.</li>
+</ol>
+<h2>Pourquoi Tabadol</h2>
+<ul>
+<li>Il trouve pour vous la personne qui a le livre que vous cherchez.</li>
+<li>Il privilégie votre ville, pour échanger en main propre ou expédier à moindre coût.</li>
+<li>Il garde les échanges équitables grâce à la valeur estimée de chaque livre.</li>
+<li>Il est pensé pour le Maroc : en français (arabe bientôt), avec les villes marocaines et les prix en dirhams.</li>
+</ul>
+<p class="ar2" lang="ar" dir="rtl">تبادل الكتب، تبادل المعرفة والعلم</p>
+<button class="btn" data-go="browse">Découvrir les livres</button>
+</article>`;
 const F={q:"",cat:"",cond:""};
 const km=(a,b)=>{const[p,q]=CITIES[a],[r,t]=CITIES[b],R=Math.PI/180,x=Math.sin((r-p)*R/2)**2+Math.cos(p*R)*Math.cos(r*R)*Math.sin((t-q)*R/2)**2;return 12742*Math.asin(Math.sqrt(x))};
 const dist=u=>km(city[me],city[u]);
@@ -176,8 +215,10 @@ function render(){
   $("#q").oninput=e=>{F.q=e.target.value;drawRes()};$("#fc").onchange=e=>{F.cat=e.target.value;drawRes()};$("#fs").onchange=e=>{F.cond=e.target.value;drawRes()};
   drawRes();
  }else if(view==="matches"){
-  v.innerHTML=`<p style="margin-top:0">Swapshelf compare toutes les étagères et listes d'envies. Une correspondance apparaît quand vous possédez un livre que quelqu'un veut et que cette personne possède un livre que vous voulez.</p>`+
+  v.innerHTML=`<p style="margin-top:0">Tabadol compare toutes les étagères et listes d'envies. Une correspondance apparaît quand vous possédez un livre que quelqu'un veut et que cette personne possède un livre que vous voulez.</p>`+
   (M.length?M.map(x=>{const s=pend(x);return `<div class="row match"><p><strong>Correspondance avec ${esc(x.u)}</strong> <small>(${esc(city[x.u])}, ${distLbl(x.u)})</small><br>Vous donnez « ${esc(x.my.title)} » (${x.my.value} DH) et recevez « ${esc(x.theirs.title)} » (${x.theirs.value} DH).</p>${s?`<span class="status wait">${s}</span>`:`<button class="btn" data-prop="${x.theirs.id}-${x.my.id}">Proposer cet échange</button>`}</div>`}).join(""):`<p class="empty">Aucune correspondance pour l'instant. Ajoutez des livres souhaités à votre liste d'envies dans Mon étagère.</p>`);
+ }else if(view==="about"){
+  v.innerHTML=ABOUT;
  }else if(view==="shelf"){
   v.innerHTML=`<form class="add" id="addf"><label class="full">Titre<input name="t" required></label>
   <label>Auteur<input name="a" required></label>
@@ -227,6 +268,7 @@ $("#view").onclick=e=>{
  }
  if(q("prop")){const [a,b]=q("prop").dataset.prop.split("-");openSwap(+a,+b)}
  if(q("rm")){wish[me].splice(+q("rm").dataset.rm,1);render()}
+ if(q("go")){view=q("go").dataset.go;render()}
  const acc=q("acc"),dec=q("dec");
  if(acc){const r=reqs.find(x=>x.id===+acc.dataset.acc);
   const w=get(r.want),o=get(r.offer);w.owner=r.from;o.owner=me;r.status="accepted";
