@@ -1,0 +1,2 @@
+# Hakuara
+Hak&amp;ara
